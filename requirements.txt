@@ -1,7 +1,5 @@
-
-# =========================
 # path: requirements.txt
-# =========================
+# Núcleo
 transformers>=4.43.0
 torch>=2.2.0
 torchvision>=0.17.0
@@ -10,3 +8,7 @@ opencv-python>=4.9.0.80
 pandas>=2.2.0
 tqdm>=4.66.0
 pytest>=8.0.0
+
+# Traducción EN->ES
+sentencepiece>=0.1.99
+sacremoses>=0.1.1
