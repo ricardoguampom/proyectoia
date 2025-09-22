@@ -23,38 +23,20 @@ proyecto/
 └─ README.md
 ````
 
-## Windows (PowerShell) – Inicio rápido
-> Ejecuta los comandos en la carpeta del repo.
+# 0) Abre PowerShell en la carpeta donde EXTRAJISTE el ZIP
+#    Ejemplo: C:\proyectoia   (evita Desktop/Downloads/OneDrive)
 
-1. Permitir scripts (una vez):
-
+# 1) (Una sola vez) permite scripts para tu usuario
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
-2. Setup (crea venv e instala dependencias):
+# 2) Desbloquea todos los archivos extraídos (clave si vino de Internet)
+Get-ChildItem -Recurse . | Unblock-File
 
-scripts\setup_and_run.ps1 setup -SkipTests
+# 3) Crea venv e instala dependencias (sin tests la primera vez)
+.\scripts\setup_and_run.ps1 setup -SkipTests
 
-3. Ejecutar sobre una imagen (primera vez descarga modelos):
-
-# coloca tu imagen de prueba en .\img\ (no se versiona)
-python tools\describe_objects.py --input .\img\image.png --out .\out --lite --cpu --max-side 1280
-
-Salidas en out/:
-
-* *_annotated.jpg con cajas y etiquetas.
-* *.json con scene_caption y captions por objeto.
-
-## Consejos
-
-* Equipos modestos: `--lite --cpu --max-side 1280`.
-* Menos falsos positivos: `--score 0.6`.
-* Tienes GPU CUDA + PyTorch con CUDA: quita `--cpu`.
-
-## Problemas comunes
-
-* **Tarda la primera vez**: está descargando modelos (normal).
-* **Memoria insuficiente**: usa `--lite` y baja `--max-side` (1024/800).
-
-## Tests
-pytest -q
-
+# 5) Ejecuta con tu imagen (primera vez descarga modelos)
+python tools\describe_objects.py --input .\img\image.png --out .\out --lite --cpu --max-side 1280 --lang es
+# 6) Abre resultados
+start .\out\image_annotated.jpg
+notepad .\out\image.json
