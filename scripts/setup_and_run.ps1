@@ -4,8 +4,11 @@ param(
   [Parameter(Position=0,Mandatory=$true)]
   [ValidateSet("setup","cache-models","run-img","run-dir","run-vid","run-cam","docker-build","docker-run","help")]
   [string]$cmd,
-  [Parameter(Position=1)] [string]$arg1
+  [Parameter(Position=1)]
+  [string]$arg1,
+  [switch]$SkipTests
 )
+
 $ErrorActionPreference = "Stop"
 $AppEntry = "tools/describe_objects.py"
 $ReqFile = "requirements.txt"
@@ -75,13 +78,14 @@ switch ($cmd) {
   "help" { Usage; break }
 
   "setup" {
-    $skip = $args -contains "-SkipTests"
+    $skip = $SkipTests.IsPresent -or $args -contains "-SkipTests" -or $args -contains "SkipTests"
     Activate-Venv
     Install-Req
-    if((Test-Path tests) -and -not $skip){
+    if ((Test-Path tests) -and -not $skip) {
       try { pytest -q } catch { throw "Tests fallaron" }
     }
   }
+
 
   "cache-models" {
     $opts = Parse-Common(@{ Lite=$false })
