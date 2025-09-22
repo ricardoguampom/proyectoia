@@ -23,29 +23,29 @@ from tqdm import tqdm
 import torch
 from transformers import pipeline
 
-# --- Mapeo rápido de etiquetas comunes a ES (fallback si traductor falla) ---
+# Mapeo rápido de etiquetas comunes a ES (fallback si traductor falla)
 COCO_ES_MAP = {
-    "person": "persona", "bicycle": "bicicleta", "car": "auto", "motorcycle": "motocicleta",
-    "airplane": "avión", "bus": "bus", "train": "tren", "truck": "camión", "boat": "barco",
-    "traffic light": "semáforo", "fire hydrant": "boca de incendio", "stop sign": "señal de alto",
-    "bench": "banco", "bird": "pájaro", "cat": "gato", "dog": "perro", "horse": "caballo",
-    "sheep": "oveja", "cow": "vaca", "elephant": "elefante", "bear": "oso", "zebra": "cebra",
-    "giraffe": "jirafa", "backpack": "mochila", "umbrella": "paraguas", "handbag": "cartera",
-    "tie": "corbata", "suitcase": "maleta", "frisbee": "frisbee", "skis": "esquís", "snowboard": "snowboard",
-    "sports ball": "pelota", "kite": "cometa", "baseball bat": "bate de béisbol",
-    "baseball glove": "guante de béisbol", "skateboard": "patineta", "surfboard": "tabla de surf",
-    "tennis racket": "raqueta de tenis", "bottle": "botella", "wine glass": "copa de vino",
-    "cup": "taza", "fork": "tenedor", "knife": "cuchillo", "spoon": "cuchara", "bowl": "cuenco",
-    "banana": "banana", "apple": "manzana", "sandwich": "sándwich", "orange": "naranja",
-    "broccoli": "brócoli", "carrot": "zanahoria", "hot dog": "hot dog", "pizza": "pizza",
-    "donut": "donut", "cake": "torta", "chair": "silla", "couch": "sofá",
-    "potted plant": "planta en maceta", "bed": "cama", "dining table": "mesa",
-    "toilet": "inodoro", "tv": "televisor", "laptop": "laptop", "mouse": "mouse",
-    "remote": "control remoto", "keyboard": "teclado", "cell phone": "celular",
-    "microwave": "microondas", "oven": "horno", "toaster": "tostadora", "sink": "fregadero",
-    "refrigerator": "refrigerador", "book": "libro", "clock": "reloj", "vase": "jarrón",
-    "scissors": "tijeras", "teddy bear": "oso de peluche", "hair drier": "secador",
-    "toothbrush": "cepillo de dientes", "table": "mesa"
+    "person": "persona","bicycle": "bicicleta","car": "auto","motorcycle": "motocicleta",
+    "airplane": "avión","bus": "bus","train": "tren","truck": "camión","boat": "barco",
+    "traffic light": "semáforo","fire hydrant": "boca de incendio","stop sign": "señal de alto",
+    "bench": "banco","bird": "pájaro","cat": "gato","dog": "perro","horse": "caballo",
+    "sheep": "oveja","cow": "vaca","elephant": "elefante","bear": "oso","zebra": "cebra",
+    "giraffe": "jirafa","backpack": "mochila","umbrella": "paraguas","handbag": "cartera",
+    "tie": "corbata","suitcase": "maleta","frisbee": "frisbee","skis": "esquís","snowboard": "snowboard",
+    "sports ball": "pelota","kite": "cometa","baseball bat": "bate de béisbol",
+    "baseball glove": "guante de béisbol","skateboard": "patineta","surfboard": "tabla de surf",
+    "tennis racket": "raqueta de tenis","bottle": "botella","wine glass": "copa de vino",
+    "cup": "taza","fork": "tenedor","knife": "cuchillo","spoon": "cuchara","bowl": "cuenco",
+    "banana": "banana","apple": "manzana","sandwich": "sándwich","orange": "naranja",
+    "broccoli": "brócoli","carrot": "zanahoria","hot dog": "hot dog","pizza": "pizza",
+    "donut": "donut","cake": "torta","chair": "silla","couch": "sofá",
+    "potted plant": "planta en maceta","bed": "cama","dining table": "mesa",
+    "toilet": "inodoro","tv": "televisor","laptop": "laptop","mouse": "mouse",
+    "remote": "control remoto","keyboard": "teclado","cell phone": "celular",
+    "microwave": "microondas","oven": "horno","toaster": "tostadora","sink": "fregadero",
+    "refrigerator": "refrigerador","book": "libro","clock": "reloj","vase": "jarrón",
+    "scissors": "tijeras","teddy bear": "oso de peluche","hair drier": "secador",
+    "toothbrush": "cepillo de dientes","table": "mesa"
 }
 
 @dataclass
