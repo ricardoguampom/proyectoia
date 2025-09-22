@@ -36,9 +36,29 @@ function Activate-Venv {
 }
 function Install-Req {
   Assert-File $ReqFile
-  python -m pip install --upgrade pip
-  pip install -r $ReqFile
+  $env:PIP_DISABLE_PIP_VERSION_CHECK = "1"
+
+  # Asegura que pip exista y esté sano (sin tocar a 25.x)
+  try {
+    python -m pip --version | Out-Null
+  } catch {
+    python -m ensurepip --upgrade
+  }
+
+  # Fija pip a una versión estable para evitar locks en Windows
+  try {
+    python -m pip install --force-reinstall --no-cache-dir "pip==24.2"
+  } catch {
+    Write-Warning "No se pudo fijar pip=24.2; continúo con la versión actual."
+  }
+
+  # Instala herramientas base (sin upgrade de pip)
+  python -m pip install --upgrade --no-cache-dir setuptools wheel
+
+  # Instala dependencias del proyecto
+  python -m pip install --no-cache-dir -r $ReqFile
 }
+
 function Cache-Models([switch]$Lite){
   $py = @"
 from transformers import pipeline
