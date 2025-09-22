@@ -1,0 +1,60 @@
+# path: README.md
+# Proyecto IA – Detección de Objetos + Descripciones (YOLOS/DETR + BLIP)
+
+Detecta objetos en imágenes/video/webcam y genera **descripciones** por objeto y una **descripción global**.  
+Incluye CLI y scripts para Windows (PowerShell). Modo **lite** para equipos sin GPU.
+
+## Requisitos
+- Python 3.10–3.13
+- Internet en la **primera ejecución** (descarga modelos desde Hugging Face).
+- Windows PowerShell (o Bash en macOS/Linux).
+- (Opcional) Docker.
+
+## Estructura
+
+```
+proyecto/
+├─ tools/describe\_objects.py
+├─ scripts/setup\_and\_run.ps1      # Windows
+├─ scripts/setup\_and\_run.sh       # macOS/Linux (opcional)
+├─ requirements.txt
+├─ tests/test\_describe\_objects.py
+├─ Dockerfile                     # CPU
+└─ README.md
+````
+
+## Windows (PowerShell) – Inicio rápido
+> Ejecuta los comandos en la carpeta del repo.
+
+1. Permitir scripts (una vez):
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+2. Setup (crea venv e instala dependencias):
+
+scripts\setup_and_run.ps1 setup -SkipTests
+
+3. Ejecutar sobre una imagen (primera vez descarga modelos):
+
+# coloca tu imagen de prueba en .\img\ (no se versiona)
+python tools\describe_objects.py --input .\img\image.png --out .\out --lite --cpu --max-side 1280
+
+Salidas en out/:
+
+* *_annotated.jpg con cajas y etiquetas.
+* *.json con scene_caption y captions por objeto.
+
+## Consejos
+
+* Equipos modestos: `--lite --cpu --max-side 1280`.
+* Menos falsos positivos: `--score 0.6`.
+* Tienes GPU CUDA + PyTorch con CUDA: quita `--cpu`.
+
+## Problemas comunes
+
+* **Tarda la primera vez**: está descargando modelos (normal).
+* **Memoria insuficiente**: usa `--lite` y baja `--max-side` (1024/800).
+
+## Tests
+pytest -q
+

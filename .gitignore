@@ -1,0 +1,31 @@
+# path: .gitignore
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.env
+.venv/
+venv/
+
+# Cache / descargas
+.cache/
+huggingface/
+hf_cache/
+*.ipynb_checkpoints
+
+# Salidas del proyecto
+out*/
+*.jpg
+*.json
+*.csv
+
+# Sistema / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Datos locales (no versionar imágenes de prueba)
+img/
